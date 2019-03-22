@@ -36,7 +36,7 @@ module.exports = class BabelConfig {
         // babel-preset-env will automatically transpile calls to `babel-polyfill` to only include polyfills needed
         // to support targeted browsers.
         if (options.includeBabelRuntime) {
-            plugins.add('transform-runtime', { 'polyfill': requiresES5, 'regenerator': options.regenerator });
+            plugins.add('@babel/plugin-transform-runtime', { 'polyfill': requiresES5, 'regenerator': options.regenerator });
         }
 
         if (options.plugins) {
@@ -56,25 +56,30 @@ module.exports = class BabelConfig {
         plugins.add(options.twistPlugin || '@twist/babel-plugin-transform', options);
 
         // Support decorators:
-        plugins.add('proposal-decorators', { legacy: true });
-        plugins.add('proposal-class-properties', {'loose': true});
+        plugins.add('@babel/plugin-proposal-decorators', { legacy: true });
+        plugins.add('@babel/plugin-proposal-class-properties', {'loose': true});
 
         // These plugins analyze `options.targets`, automatically determining which standards-track plugins need to be
         // included to support the targeted browsers.
-        plugins.addPreset('env', {
-            targets: Object.assign({
-                uglify: requiresES5
-            }, options.targets),
-            debug: false,
-            useBuiltIns: true,
-            exclude: options.regenerator ? [] : [
-                'transform-regenerator',
-                'transform-async-to-generator'
-            ]
+        plugins.addPreset("env", {
+          targets: Object.assign(
+            {
+              uglify: requiresES5
+            },
+            options.targets
+          ),
+          debug: false,
+          useBuiltIns: true,
+          exclude: options.regenerator
+            ? []
+            : [
+                "@babel/plugin-transform-regenerator",
+                "@babel/plugin-transform-async-to-generator"
+              ]
         });
 
         if (!options.regenerator) {
-            plugins.add('fast-async', { spec: true });
+            plugins.add('module:fast-async', { spec: true });
         }
 
         // Only especially old browsers need to transpile "const" to "var" (like Safari 9).
@@ -83,7 +88,7 @@ module.exports = class BabelConfig {
         }
 
         if (requiresES5 || options.transformImports) {
-            plugins.add('transform-modules-commonjs', { loose: true });
+            plugins.add('@babel/plugin-transform-modules-commonjs', { loose: true });
         }
 
         return plugins.build();

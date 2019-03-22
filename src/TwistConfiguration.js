@@ -56,7 +56,7 @@ module.exports = class TwistConfiguration {
 
         // Path aliases (e.g. mapping an alias to a folder)
         this._pathAliases = {
-            'babel-runtime/helpers/inherits': require.resolve('./third_party/inherits')
+            '@babel/runtime/helpers/inherits': require.resolve('./third_party/inherits')
         };
 
         this._libraryLoader = new LibraryLoader(this);

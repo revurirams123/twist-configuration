@@ -15,7 +15,7 @@
 
 const path = require('path');
 const assert = require('assert');
-const babel = require('babel-core');
+const babel = require('@babel/core');
 
 const TwistConfiguration = require('../src/TwistConfiguration');
 
@@ -150,7 +150,7 @@ describe('TwistConfiguration', () => {
         `, config.babelOptions).code.trim(), `
 "use strict";
 
-var _promise = require("babel-runtime/core-js/promise");
+var _promise = require("@babel/runtime/core-js/promise");
 
 var _promise2 = _interopRequireDefault(_promise);
 
@@ -183,7 +183,7 @@ function foo() {
         }
         `, config.babelOptions).code;
 
-        assert(code.indexOf('require("babel-runtime/regenerator");') !== -1);
+        assert(code.indexOf('require("@babel/runtime/regenerator");') !== -1);
     });
 
 });
