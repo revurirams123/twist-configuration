@@ -56,8 +56,8 @@ module.exports = class BabelConfig {
         plugins.add(options.twistPlugin || '@twist/babel-plugin-transform', options);
 
         // Support decorators:
-        plugins.add('transform-decorators-legacy');
-        plugins.add('transform-class-properties');
+        plugins.add('proposal-decorators', { legacy: true });
+        plugins.add('proposal-class-properties', {'loose': true});
 
         // These plugins analyze `options.targets`, automatically determining which standards-track plugins need to be
         // included to support the targeted browsers.
@@ -83,7 +83,7 @@ module.exports = class BabelConfig {
         }
 
         if (requiresES5 || options.transformImports) {
-            plugins.add('transform-es2015-modules-commonjs', { loose: true });
+            plugins.add('transform-modules-commonjs', { loose: true });
         }
 
         return plugins.build();
